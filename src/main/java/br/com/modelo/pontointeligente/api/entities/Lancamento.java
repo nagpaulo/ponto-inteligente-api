@@ -26,6 +26,7 @@ public class Lancamento implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ci_lancamento", nullable = false)
     public Long getId() {
         return id;
     }
@@ -35,7 +36,7 @@ public class Lancamento implements Serializable{
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data", nullable = false)
+    @Column(name = "dt_ponto", nullable = false)
     public Date getData() {
         return data;
     }
@@ -93,6 +94,7 @@ public class Lancamento implements Serializable{
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "cd_funcionario", nullable = false)
     public Funcionario getFuncionario() {
         return funcionario;
     }

@@ -151,7 +151,8 @@ public class Funcionario implements Serializable{
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(name = "cd_empresa", nullable = false)
     public Empresa getEmpresa() {
         return empresa;
     }
