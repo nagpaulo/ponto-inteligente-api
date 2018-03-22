@@ -94,7 +94,6 @@ public class Lancamento implements Serializable{
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "cd_funcionario", nullable = false)
     public Funcionario getFuncionario() {
         return funcionario;
     }
