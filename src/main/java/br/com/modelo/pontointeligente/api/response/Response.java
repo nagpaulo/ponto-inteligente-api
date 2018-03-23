@@ -1,4 +1,4 @@
-package br.com.modelo.pontointeligente.response;
+package br.com.modelo.pontointeligente.api.response;
 
 import java.util.ArrayList;
 import java.util.List;
