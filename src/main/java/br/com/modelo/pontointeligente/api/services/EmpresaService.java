@@ -21,6 +21,7 @@ public interface EmpresaService {
      * @param empresa
      * @return Empresa
      * @author Paulo Roberto Mesquita da Silva
+     *
      * */
     Empresa persistir(Empresa empresa);
 }
