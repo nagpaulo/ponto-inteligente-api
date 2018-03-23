@@ -45,7 +45,7 @@ public class Lancamento implements Serializable{
         this.data = data;
     }
 
-    @Column(name = "ds_informacao", nullable = false)
+    @Column(name = "ds_informacao")
     public String getDescricao() {
         return descricao;
     }
@@ -54,7 +54,7 @@ public class Lancamento implements Serializable{
         this.descricao = descricao;
     }
 
-    @Column(name = "ds_localizacao", nullable = false)
+    @Column(name = "ds_localizacao")
     public String getLocalizacao() {
         return localizacao;
     }
@@ -100,5 +100,18 @@ public class Lancamento implements Serializable{
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+
+    @PreUpdate
+    public void preUpdate(){
+        dataAtualizacao = new Date();
+    }
+
+    @PrePersist
+    public void prePersist(){
+        final Date atual = new Date();
+        dataCriacao = atual;
+        dataAtualizacao = atual;
     }
 }
