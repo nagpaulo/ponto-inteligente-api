@@ -1,7 +1,8 @@
 package br.com.modelo.pontointeligente.api.dtos;
 
-
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -48,6 +49,7 @@ public class CadastroPJDto {
         this.email = email;
     }
 
+    @NotEmpty(message = "Senha não pode ser vazio.")
     public String getSenha() {
         return senha;
     }
@@ -56,6 +58,8 @@ public class CadastroPJDto {
         this.senha = senha;
     }
 
+    @NotEmpty(message = "CPF não pode ser vazio.")
+    @CPF(message = "CPF inválido.")
     public String getCpf() {
         return cpf;
     }
@@ -64,6 +68,8 @@ public class CadastroPJDto {
         this.cpf = cpf;
     }
 
+    @NotEmpty(message = "Razão Social não pode ser vazio.")
+    @Length(min = 5, max = 200, message = "Razão Social deve contar entre 5 e 200 caracteres.")
     public String getRazaoSocial() {
         return razaoSocial;
     }
@@ -72,6 +78,8 @@ public class CadastroPJDto {
         this.razaoSocial = razaoSocial;
     }
 
+    @NotEmpty(message = "CNPJ não pode ser vazio.")
+    @CNPJ(message = "CNPJ inválido.")
     public String getCnpj() {
         return cnpj;
     }
