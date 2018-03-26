@@ -20,11 +20,11 @@ import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 
 @RestController
-@RequestMapping("api/cadastro-pj")
+@RequestMapping("api/cadastrar-pj")
 @CrossOrigin(origins = "*")
 public class CadastroPJController {
 
-    private static final Logger log = LoggerFactory.getLogger(CadastroPJDto.class);
+    private static final Logger log = LoggerFactory.getLogger(CadastroPJController.class);
 
     @Autowired
     private FuncionarioService funcionarioService;
