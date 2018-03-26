@@ -1,4 +1,4 @@
-/*CREATE TABLE ponto.tb_empresa
+CREATE TABLE ponto.tb_empresa
 (
     ci_empresa bigserial NOT NULL,
     nr_razaosocial character varying(180) COLLATE pg_catalog."default" NOT NULL,
@@ -60,4 +60,4 @@ TABLESPACE pg_default;
 
 ALTER TABLE ponto.tb_empresa OWNER to postgres;
 ALTER TABLE ponto.tb_funcionario OWNER to postgres;
-ALTER TABLE ponto.tb_lancamento OWNER to postgres;*/
+ALTER TABLE ponto.tb_lancamento OWNER to postgres;
