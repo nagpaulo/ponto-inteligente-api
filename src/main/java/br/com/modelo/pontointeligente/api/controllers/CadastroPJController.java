@@ -3,9 +3,11 @@ package br.com.modelo.pontointeligente.api.controllers;
 import br.com.modelo.pontointeligente.api.dtos.CadastroPJDto;
 import br.com.modelo.pontointeligente.api.entities.Empresa;
 import br.com.modelo.pontointeligente.api.entities.Funcionario;
+import br.com.modelo.pontointeligente.api.enums.PerfilEnum;
 import br.com.modelo.pontointeligente.api.response.Response;
 import br.com.modelo.pontointeligente.api.services.EmpresaService;
 import br.com.modelo.pontointeligente.api.services.FuncionarioService;
+import br.com.modelo.pontointeligente.api.utils.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,10 +88,44 @@ public class CadastroPJController {
      * Converte os dados de DTO para empresa.
      *
      * @param cadastroPJDto
-     * @param Empresa
+     * @return Empresa
      * */
     private Empresa converterDtoParaEmpresa(CadastroPJDto cadastroPJDto){
         Empresa empresa = new Empresa();
-        return null;
+        empresa.setCnpj(cadastroPJDto.getCnpj());
+        empresa.setRazaoSocial(cadastroPJDto.getRazaoSocial());
+
+        return empresa;
+    }
+
+    /**
+     * Converte os dados de DTO para funcionario.
+     *
+     * @param cadastroPJDto
+     * @param result
+     * @return Funcionario
+     * @throws NoSuchAlgorithmException
+     * */
+    private Funcionario converterDtoParaFuncionario(CadastroPJDto cadastroPJDto, BindingResult result) throws NoSuchAlgorithmException{
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(cadastroPJDto.getNome());
+        funcionario.setEmail(cadastroPJDto.getEmail());
+        funcionario.setCpf(cadastroPJDto.getCpf());
+        funcionario.setPerfil(PerfilEnum.ROLE_ADMIN);
+        funcionario.setSenha(PasswordUtils.gerarBCrypt(cadastroPJDto.getSenha()));
+
+        return funcionario;
+    }
+
+    private CadastroPJDto converterCadastroPJDto(Funcionario funcionario){
+        CadastroPJDto cadastroPJDto = new CadastroPJDto();
+        cadastroPJDto.setId(funcionario.getId());
+        cadastroPJDto.setNome(funcionario.getNome());
+        cadastroPJDto.setEmail(funcionario.getEmail());
+        cadastroPJDto.setCpf(funcionario.getCpf());
+        cadastroPJDto.setRazaoSocial(funcionario.getEmpresa().getRazaoSocial());
+        cadastroPJDto.setCnpj(funcionario.getEmpresa().getCnpj());
+
+        return cadastroPJDto;
     }
 }
