@@ -34,8 +34,6 @@ public class CadastroPJController {
         throws NoSuchAlgorithmException{
 
         log.info("Cadastrando PJ: {}", cadastroPJDto.toString());
-
         return null;
-
     }
 }
