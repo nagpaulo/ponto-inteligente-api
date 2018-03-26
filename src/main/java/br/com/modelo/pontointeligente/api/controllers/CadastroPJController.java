@@ -20,11 +20,11 @@ import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 
 @RestController
-@RequestMapping("api/cadastro-pj")
+@RequestMapping("api/cadastrar-pj")
 @CrossOrigin(origins = "*")
 public class CadastroPJController {
 
-    private static final Logger log = LoggerFactory.getLogger(CadastroPJDto.class);
+    private static final Logger log = LoggerFactory.getLogger(CadastroPJController.class);
 
     @Autowired
     private FuncionarioService funcionarioService;
@@ -76,11 +76,11 @@ public class CadastroPJController {
      * */
     private void validaDadosExistentes(CadastroPJDto cadastroPJDto, BindingResult result){
         this.empresaService.buscarPorCnpj(cadastroPJDto.getCnpj())
-                .ifPresent(empresa -> result.addError(new ObjectError("Empresa","Empresa já existente.")));
+                .ifPresent(empresa -> result.addError(new ObjectError("Empresa","Empresa "+cadastroPJDto.getRazaoSocial()+" já existente.")));
         this.funcionarioService.buscarPorCpf(cadastroPJDto.getCpf())
-                .ifPresent(funcionario -> result.addError(new ObjectError("Funcionario", "Funcionario com CPF informado já existente.")));
+                .ifPresent(funcionario -> result.addError(new ObjectError("Funcionario", "Funcionario com CPF "+cadastroPJDto.getCpf()+" já existente.")));
         this.funcionarioService.buscarPorEmail(cadastroPJDto.getEmail())
-                .ifPresent(funcionario -> result.addError(new ObjectError("Funcionário", "Funcionario com Email informado já existente.")));
+                .ifPresent(funcionario -> result.addError(new ObjectError("Funcionário", "Funcionario com Email "+cadastroPJDto.getEmail()+" já existente.")));
 
     }
 

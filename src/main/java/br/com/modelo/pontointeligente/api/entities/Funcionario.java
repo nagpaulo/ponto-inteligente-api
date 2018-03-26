@@ -85,7 +85,7 @@ public class Funcionario implements Serializable{
     }
 
     @Transient
-    private Optional<BigDecimal> getValorHoraOpt(){
+    public Optional<BigDecimal> getValorHoraOpt(){
         return Optional.ofNullable(valorHora);
     }
 
@@ -99,7 +99,7 @@ public class Funcionario implements Serializable{
     }
 
     @Transient
-    private Optional<Float> getQtdHorasTrabalhoDiaOpt(){
+    public Optional<Float> getQtdHorasTrabalhoDiaOpt(){
         return Optional.ofNullable(qtdHorasTrabalhoDia);
     }
 
@@ -113,7 +113,7 @@ public class Funcionario implements Serializable{
     }
 
     @Transient
-    private Optional<Float> getQtdHorasAlmocoOpt(){
+    public Optional<Float> getQtdHorasAlmocoOpt(){
         return Optional.ofNullable(qtdHorasAlmoco);
     }
 
