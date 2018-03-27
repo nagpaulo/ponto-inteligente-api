@@ -6,6 +6,9 @@ public class EmpresaDto {
     private String razaoSocial;
     private String cnpj;
 
+    public EmpresaDto() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -28,5 +31,14 @@ public class EmpresaDto {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    @Override
+    public String toString() {
+        return "EmpresaDto{" +
+                "id=" + id +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                '}';
     }
 }
