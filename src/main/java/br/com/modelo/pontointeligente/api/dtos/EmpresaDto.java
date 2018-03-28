@@ -1,4 +1,4 @@
-package br.com.modelo.pontointeligente.api.controllers;
+package br.com.modelo.pontointeligente.api.dtos;
 
 public class EmpresaDto {
 

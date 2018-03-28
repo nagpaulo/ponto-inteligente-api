@@ -1,6 +1,6 @@
-package br.com.modelo.pontointeligente.api.dtos;
+package br.com.modelo.pontointeligente.api.controllers;
 
-import br.com.modelo.pontointeligente.api.controllers.EmpresaDto;
+import br.com.modelo.pontointeligente.api.dtos.EmpresaDto;
 import br.com.modelo.pontointeligente.api.entities.Empresa;
 import br.com.modelo.pontointeligente.api.response.Response;
 import br.com.modelo.pontointeligente.api.services.EmpresaService;
@@ -35,15 +35,15 @@ public class EmpresaController {
     public ResponseEntity<Response<EmpresaDto>> buscarPorCnpj(@PathVariable("cnpj") String cnpj){
         log.info("Bucando empresa por CNPJ: {}", cnpj);
         Response<EmpresaDto> response = new Response<EmpresaDto>();
-        Optional<Empresa> empresa = empresaService.buscarPorCnpj(cnpj);
+        Optional<Empresa> empresaOptional = empresaService.buscarPorCnpj(cnpj);
 
-        if(!empresa.isPresent()){
+        if(!empresaOptional.isPresent()){
             log.info("Empresa não encontrada para o CNPJ: {}", cnpj);
             response.getErrors().add("Empresa não encontrada para o CNPJ "+cnpj);
             return ResponseEntity.badRequest().body(response);
         }
 
-        response.setData(this.converterEmpresaDto(empresa.get()));
+        response.setData(this.converterEmpresaDto(empresaOptional.get()));
         return ResponseEntity.ok(response);
     }
 
