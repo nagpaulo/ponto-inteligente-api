@@ -33,8 +33,7 @@ public class Funcionario implements Serializable{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funcionario_seq_gen")
-    @SequenceGenerator(name = "funcionario_seq_gen", sequenceName = "ponto.tb_funcionario_ci_funcionario_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ci_funcionario")
     public Long getId() {
         return id;

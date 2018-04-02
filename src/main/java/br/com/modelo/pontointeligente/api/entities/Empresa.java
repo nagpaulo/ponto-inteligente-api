@@ -23,8 +23,7 @@ public class Empresa implements Serializable{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "empresa_seq_gen")
-    @SequenceGenerator(name = "empresa_seq_gen", sequenceName = "ponto.tb_empresa_ci_empresa_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ci_empresa", nullable = false)
     public Long getId() {
         return id;
