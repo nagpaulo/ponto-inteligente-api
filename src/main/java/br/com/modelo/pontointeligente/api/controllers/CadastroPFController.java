@@ -1,7 +1,6 @@
 package br.com.modelo.pontointeligente.api.controllers;
 
 import br.com.modelo.pontointeligente.api.dtos.CadastroPFDto;
-import br.com.modelo.pontointeligente.api.dtos.CadastroPJDto;
 import br.com.modelo.pontointeligente.api.entities.Empresa;
 import br.com.modelo.pontointeligente.api.entities.Funcionario;
 import br.com.modelo.pontointeligente.api.enums.PerfilEnum;

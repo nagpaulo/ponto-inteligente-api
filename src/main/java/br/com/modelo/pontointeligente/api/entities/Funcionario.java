@@ -33,7 +33,7 @@ public class Funcionario implements Serializable{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ci_funcionario")
     public Long getId() {
         return id;
@@ -121,7 +121,7 @@ public class Funcionario implements Serializable{
         this.qtdHorasAlmoco = qtdHorasAlmoco;
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "cd_perfil", nullable = false)
     public PerfilEnum getPerfil() {
         return perfil;

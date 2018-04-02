@@ -23,7 +23,7 @@ public class Empresa implements Serializable{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ci_empresa", nullable = false)
     public Long getId() {
         return id;
