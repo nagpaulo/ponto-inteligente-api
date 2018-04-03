@@ -121,7 +121,7 @@ public class Funcionario implements Serializable{
         this.qtdHorasAlmoco = qtdHorasAlmoco;
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "cd_perfil", nullable = false)
     public PerfilEnum getPerfil() {
         return perfil;

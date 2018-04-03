@@ -25,7 +25,8 @@ public class Lancamento implements Serializable{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lancamento_seq_gen")
+    @SequenceGenerator(name = "lancamento_seq_gen", sequenceName = "ponto.tb_lancamento_ci_lancamento_seq")
     @Column(name = "ci_lancamento", nullable = false)
     public Long getId() {
         return id;

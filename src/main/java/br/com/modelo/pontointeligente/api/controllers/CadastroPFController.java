@@ -1,7 +1,6 @@
 package br.com.modelo.pontointeligente.api.controllers;
 
 import br.com.modelo.pontointeligente.api.dtos.CadastroPFDto;
-import br.com.modelo.pontointeligente.api.dtos.CadastroPJDto;
 import br.com.modelo.pontointeligente.api.entities.Empresa;
 import br.com.modelo.pontointeligente.api.entities.Funcionario;
 import br.com.modelo.pontointeligente.api.enums.PerfilEnum;
@@ -76,6 +75,11 @@ public class CadastroPFController {
      * @param result
      * */
     private void validarDadosExistentes(CadastroPFDto cadastroPFDto, BindingResult result){
+        Optional<Empresa> empresa = this.empresaService.buscarPorCnpj(cadastroPFDto.getCnpj());
+        if(!empresa.isPresent()){
+            result.addError(new ObjectError("Empresa","Empresa com CNPJ: "+cadastroPFDto.getCnpj()+", não encontrada."));
+        }
+
         this.funcionarioService.buscarPorCpf(cadastroPFDto.getCpf())
                 .ifPresent(funcionario -> result.addError(new ObjectError("Funcionario", "Funcionario com CPF "+cadastroPFDto.getCpf()+" já existente.")));
         this.funcionarioService.buscarPorEmail(cadastroPFDto.getEmail())
