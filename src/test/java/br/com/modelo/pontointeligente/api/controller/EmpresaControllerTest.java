@@ -35,7 +35,7 @@ public class EmpresaControllerTest {
     @MockBean
     private EmpresaService empresaService;
 
-    private static final String BUSCAR_EMPRESA_CNPJ_URL = "/api/empresas/cnpj/";
+    private static final String BUSCAR_EMPRESA_CNPJ_URL = "http://localhost:8080/api/empresas/cnpj/";
     private static final Long ID = Long.valueOf(1);
     private static final String CNPJ = "54481883000128";
     private static final String RAZAO_SOCIAL = "EMPRESA XYZ";
@@ -47,12 +47,12 @@ public class EmpresaControllerTest {
 
         mvc.perform(MockMvcRequestBuilders.get(BUSCAR_EMPRESA_CNPJ_URL+CNPJ).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errors").value("Empresa não encontrada para o CNPJ"+CNPJ));
+                .andExpect(jsonPath("$.errors").value("Empresa não encontrada para o CNPJ "+CNPJ));
     }
 
+    @Test
     public void testBuscarEmpresaCnpjValido() throws Exception {
-        BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString()))
-                .willReturn(Optional.of(this.obterDadosEmpresa()));
+        BDDMockito.given(this.empresaService.buscarPorCnpj(Mockito.anyString())).willReturn(Optional.of(this.obterDadosEmpresa()));
 
         mvc.perform(MockMvcRequestBuilders.get(BUSCAR_EMPRESA_CNPJ_URL+CNPJ)
                 .accept(MediaType.APPLICATION_JSON))

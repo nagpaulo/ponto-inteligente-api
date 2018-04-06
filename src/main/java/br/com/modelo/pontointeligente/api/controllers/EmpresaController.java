@@ -31,7 +31,7 @@ public class EmpresaController {
      * @param cnpj
      * @return ResponseEntity<Response<EmpresaDto>>
      * */
-    @GetMapping(value = "/getempresa/{cnpj}")
+    @GetMapping(value = "/cnpj/{cnpj}")
     public ResponseEntity<Response<EmpresaDto>> buscarPorCnpj(@PathVariable("cnpj") String cnpj){
         log.info("Bucando empresa por CNPJ: {}", cnpj);
         Response<EmpresaDto> response = new Response<EmpresaDto>();

@@ -76,6 +76,7 @@ public class LancamentoRepositoryTest {
         lancamento.setData(new Date());
         lancamento.setTipo(TipoEnum.INICIO_ALMOCO);
         lancamento.setFuncionario(funcionario);
+        lancamento.setLocalizacao("Matriz");
         lancamento.setDescricao("Lançamento Teste");
         return lancamento;
     }
@@ -85,8 +86,8 @@ public class LancamentoRepositoryTest {
         funcionario.setNome("Fulano de Tal");
         funcionario.setPerfil(PerfilEnum.ROLE_USUARIO);
         funcionario.setSenha(PasswordUtils.gerarBCrypt("123456"));
-        funcionario.setCpf("email@email.com");
-        funcionario.setEmail("24291173474");
+        funcionario.setCpf("24291173474");
+        funcionario.setEmail("email@email.com");
         funcionario.setQtdHorasAlmoco(2f);
         funcionario.setQtdHorasTrabalhoDia(8f);
         funcionario.setEmpresa(empresa);
