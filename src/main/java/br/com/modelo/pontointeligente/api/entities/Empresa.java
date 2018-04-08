@@ -98,9 +98,6 @@ public class Empresa implements Serializable{
                 "id=" + id +
                 ", razaoSocial='" + razaoSocial + '\'' +
                 ", cnpj='" + cnpj + '\'' +
-                ", dataCriacao=" + dataCriacao +
-                ", dataAtualizacao=" + dataAtualizacao +
-                ", funcionarios=" + funcionarios +
                 '}';
     }
 }

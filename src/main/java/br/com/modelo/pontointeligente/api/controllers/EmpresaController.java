@@ -57,7 +57,7 @@ public class EmpresaController {
         EmpresaDto empresaDto = new EmpresaDto();
         empresaDto.setId(empresa.getId());
         empresaDto.setCnpj(empresa.getCnpj());
-        empresaDto.setRazaoSocial(empresaDto.getRazaoSocial());
+        empresaDto.setRazaoSocial(empresa.getRazaoSocial());
         return empresaDto;
     }
 
