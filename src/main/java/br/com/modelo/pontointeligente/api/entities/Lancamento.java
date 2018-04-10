@@ -84,7 +84,7 @@ public class Lancamento implements Serializable{
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "cd_tipo")
     public TipoEnum getTipo() {
         return tipo;
