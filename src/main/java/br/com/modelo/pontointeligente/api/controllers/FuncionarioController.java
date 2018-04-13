@@ -115,10 +115,15 @@ public class FuncionarioController {
         funcionarioDto.setId(funcionario.getId());
         funcionarioDto.setEmail(funcionario.getEmail());
         funcionarioDto.setNome(funcionario.getNome());
-        funcionario.getQtdHorasAlmocoOpt().isPresent(qtdHorasAlmoco -> funcionarioDto.setQtdHorasAlmoco(Optional.of(Float.toString(qtdHorasAlmoco))));
-        funcionario.getQtdHorasTrabalhoDiaOpt().isPresent(qtdHorasTrabalhoDia -> funcionarioDto.setQtdHorasTrabalhoDia(Optional.of(Float.toString(qtdHorasTrabalhoDia))));
-        funcionario.getValorHoraOpt().isPresent(valorHora -> funcionarioDto.setValorHora(Optional.of(valorHora.toString())));
-
+        funcionario.getQtdHorasAlmocoOpt().ifPresent(
+                qtdHorasAlmoco -> funcionarioDto.setQtdHorasAlmoco(Optional.of(String.valueOf(qtdHorasAlmoco)))
+        );
+        funcionario.getQtdHorasTrabalhoDiaOpt().ifPresent(
+                qtdHorasTrabalhoDia -> funcionarioDto.setQtdHorasTrabalhoDia(Optional.of(Float.toString(qtdHorasTrabalhoDia)))
+        );
+        funcionario.getValorHoraOpt().ifPresent(
+                valorHora -> funcionarioDto.setValorHora(Optional.of(valorHora.toString()))
+        );
         return funcionarioDto;
     }
 }
