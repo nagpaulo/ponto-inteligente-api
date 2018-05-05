@@ -1,5 +1,6 @@
 package br.com.modelo.pontointeligente.api.dtos;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 
 public class LancamentoDto {
@@ -22,6 +23,7 @@ public class LancamentoDto {
         this.id = id;
     }
 
+    @NotEmpty(message = "Data não pode ser vazia.")
     public String getData() {
         return data;
     }

@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/lancamento")
+@RequestMapping("/api/lancamentos")
 @CrossOrigin(origins = "*")
 public class LancamentoController {
 
@@ -38,6 +38,16 @@ public class LancamentoController {
     public LancamentoController() {
     }
 
+
+    /**
+     * Retorna a listagem de lançamento de um funcionario.
+     *
+     * @param funcionarioId
+     * @param pag
+     * @param ord
+     * @param dir
+     * @return ResponseEntity<Response<LancamentoDto>>
+     */
     @GetMapping(value = "/funcionario/{funcionarioId}")
     public ResponseEntity<Response<Page<LancamentoDto>>> listarPorFuncionarioId
             (
