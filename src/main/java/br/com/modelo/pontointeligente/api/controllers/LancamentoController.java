@@ -69,6 +69,23 @@ public class LancamentoController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Response<LancamentoDto>> listaPorId(@PathVariable("id") Long id) {
+        log.info("Bucando lancamento por ID: {}", id);
+
+        Response<LancamentoDto> response = new Response<LancamentoDto>();
+        Optional<Lancamento> lancamento = this.lancamentoService.buscarPorId(id);
+
+        if(!lancamento.isPresent()){
+            log.info("Lancamento não encontrado para o id {}", id);
+            response.getErrors().add("Lancamento não encontrado para o id  " + id);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        response.setData(this.converteLancamentoDto(lancamento.get()));
+        return ResponseEntity.ok(response);
+    }
+
     /**
      * Converte um lançamento em um lancamento DTO.
      *
