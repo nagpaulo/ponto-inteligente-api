@@ -1,10 +1,13 @@
 package br.com.modelo.pontointeligente.api.controller;
 
+import br.com.modelo.pontointeligente.api.dtos.LancamentoDto;
 import br.com.modelo.pontointeligente.api.entities.Funcionario;
 import br.com.modelo.pontointeligente.api.entities.Lancamento;
 import br.com.modelo.pontointeligente.api.enums.TipoEnum;
 import br.com.modelo.pontointeligente.api.services.FuncionarioService;
 import br.com.modelo.pontointeligente.api.services.LancamentoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -68,10 +71,32 @@ public class LancamentoControllerTest {
                 .andExpect(jsonPath("$.errors").isEmpty());
     }
 
-    private Lancamento obterDadosLancamento() {
-        return null;
+    public void testRemoverLancamento() throws Exception {
+        BDDMockito.given(this.lancamentoService.buscarPorId(Mockito.anyLong())).willReturn(Optional.of(new Lancamento()));
+
+        mvc.perform(MockMvcRequestBuilders.delete(URL_BASE + ID_LANCAMENTO)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
-    private byte[] obterJsonRequisicaoPost() {
+    private Lancamento obterDadosLancamento() {
+        Lancamento lancamento = new Lancamento();
+        lancamento.setId(ID_LANCAMENTO);
+        lancamento.setData(DATA);
+        lancamento.setTipo(TipoEnum.valueOf(TIPO));
+        lancamento.setFuncionario(new Funcionario());
+        lancamento.getFuncionario().setId(ID_FUNCIONARIO);
+        return lancamento;
+    }
+
+    private String obterJsonRequisicaoPost() throws JsonProcessingException{
+        LancamentoDto lancamentoDto = new LancamentoDto();
+        lancamentoDto.setId(null);
+        lancamentoDto.setData(this.dateFormat.format(DATA));
+        lancamentoDto.setTipo(TIPO);
+        lancamentoDto.setFuncionarioId(ID_FUNCIONARIO);
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.writeValueAsString(lancamentoDto);
     }
 }
