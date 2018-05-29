@@ -25,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,8 +44,8 @@ public class LancamentoControllerTest {
     private FuncionarioService funcionarioService;
 
     private static final String URL_BASE = "/api/lancamentos/";
-    private static final Long ID_FUNCIONARIO = 1L;
-    private static final Long ID_LANCAMENTO = 1L;
+    private static final Long ID_FUNCIONARIO = 21L;
+    private static final Long ID_LANCAMENTO = 102L;
     private static final String TIPO = TipoEnum.INICIO_TRABALHO.name();
     private static final Date DATA = new Date();
 
@@ -71,6 +70,19 @@ public class LancamentoControllerTest {
                 .andExpect(jsonPath("$.errors").isEmpty());
     }
 
+    @Test
+    public void testCadastrarLancamentoFuncionarioIdInvalido() throws Exception {
+        BDDMockito.given(this.funcionarioService.buscarPorId(Mockito.anyLong())).willReturn(Optional.empty());
+
+        mvc.perform(MockMvcRequestBuilders.post(URL_BASE)
+                .content(this.obterJsonRequisicaoPost())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors").value("Funcionário não encontrado. ID inexistente."))
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+    @Test
     public void testRemoverLancamento() throws Exception {
         BDDMockito.given(this.lancamentoService.buscarPorId(Mockito.anyLong())).willReturn(Optional.of(new Lancamento()));
 
