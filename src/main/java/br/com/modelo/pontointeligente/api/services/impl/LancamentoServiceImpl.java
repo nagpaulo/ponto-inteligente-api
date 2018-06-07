@@ -29,7 +29,7 @@ public class LancamentoServiceImpl implements LancamentoService{
     @Override
     public Optional<Lancamento> buscarPorId(Long id) {
         log.info("Bucando um lançamento por funcionario ID {}", id);
-        return Optional.ofNullable(this.lancamentoRepository.getOne(id));
+        return this.lancamentoRepository.findById(id);
     }
 
     @Override
