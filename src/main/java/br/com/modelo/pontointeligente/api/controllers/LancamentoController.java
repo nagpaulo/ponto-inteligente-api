@@ -93,6 +93,27 @@ public class LancamentoController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping(value = "{id}")
+    public ResponseEntity<Response<LancamentoDto>> atualizar(@PathVariable("id") Long id
+            , @Valid @RequestBody LancamentoDto lancamentoDto, BindingResult result) throws ParseException{
+
+        log.info("Atualizando lancamento: {}", lancamentoDto.toString());
+        Response<LancamentoDto> response = new Response<LancamentoDto>();
+        validarFuncionario(lancamentoDto, result);
+        lancamentoDto.setId(Optional.of(id));
+        Lancamento lancamento = this.converteLancamentoDtoParaLancamento(lancamentoDto, result);
+
+        if(result.hasErrors()){
+            log.error("Erro validando lancamento: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        lancamento = this.lancamentoService.persistir(lancamento);
+        response.setData(this.converteLancamentoDto(lancamento));
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     public ResponseEntity<Response<LancamentoDto>> adicionar(@Valid @RequestBody LancamentoDto lancamentoDto, BindingResult result)
             throws ParseException
@@ -111,6 +132,22 @@ public class LancamentoController {
         lancamento = this.lancamentoService.persistir(lancamento);
         response.setData(this.converteLancamentoDto(lancamento));
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id){
+        log.info("Removendo lançamento: {}", id);
+        Response<String> response = new Response<String>();
+        Optional<Lancamento> lancamento = this.lancamentoService.buscarPorId(id);
+
+        if(!lancamento.isPresent()){
+            log.info("Erro ao remover devido ao lançamento ID: {} ser inválido.", id);
+            response.getErrors().add("Erro ao remover lançamento. Registro não encontrado para o id "+id);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        this.lancamentoService.remover(id);
+        return ResponseEntity.ok(new Response<String>());
     }
 
     /**
@@ -132,6 +169,13 @@ public class LancamentoController {
         }
     }
 
+
+    /**
+     * @param lancamentoDto
+     * @param result
+     * @return
+     * @throws ParseException
+     */
     private Lancamento converteLancamentoDtoParaLancamento(LancamentoDto lancamentoDto, BindingResult result) throws ParseException {
         Lancamento lancamento = new Lancamento();
 

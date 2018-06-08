@@ -44,8 +44,8 @@ public class LancamentoControllerTest {
     private FuncionarioService funcionarioService;
 
     private static final String URL_BASE = "/api/lancamentos/";
-    private static final Long ID_FUNCIONARIO = 21L;
-    private static final Long ID_LANCAMENTO = 102L;
+    private static final Long ID_FUNCIONARIO = 56L;
+    private static final Long ID_LANCAMENTO = 303L;
     private static final String TIPO = TipoEnum.INICIO_TRABALHO.name();
     private static final Date DATA = new Date();
 
@@ -70,7 +70,7 @@ public class LancamentoControllerTest {
                 .andExpect(jsonPath("$.errors").isEmpty());
     }
 
-    @Test
+    //@Test
     public void testCadastrarLancamentoFuncionarioIdInvalido() throws Exception {
         BDDMockito.given(this.funcionarioService.buscarPorId(Mockito.anyLong())).willReturn(Optional.empty());
 
@@ -82,7 +82,7 @@ public class LancamentoControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
-    @Test
+    //@Test
     public void testRemoverLancamento() throws Exception {
         BDDMockito.given(this.lancamentoService.buscarPorId(Mockito.anyLong())).willReturn(Optional.of(new Lancamento()));
 
