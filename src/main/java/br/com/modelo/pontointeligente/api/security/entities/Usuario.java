@@ -23,7 +23,7 @@ public class Usuario implements Serializable {
 	private String email;
 	private String senha;
 	private PerfilEnum perfil;
-	private Integer cpf;
+	private String cpf;
 
 
 	public Usuario() {
@@ -31,7 +31,7 @@ public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "nm_usuario", nullable = false)
+	@Column(name = "ci_usuario", nullable = false)
 	public Long getId() {
 		return id;
 	}
@@ -69,11 +69,11 @@ public class Usuario implements Serializable {
 	}
 
 	@Column(name = "nr_cpf", nullable = false)
-	public Integer getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Integer cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 }
