@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import br.com.modelo.pontointeligente.api.enums.PerfilEnum;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "tb_usuario", schema = "util")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 306411570471828345L;
@@ -23,12 +23,15 @@ public class Usuario implements Serializable {
 	private String email;
 	private String senha;
 	private PerfilEnum perfil;
+	private String cpf;
+
 
 	public Usuario() {
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ci_usuario", nullable = false)
 	public Long getId() {
 		return id;
 	}
@@ -37,7 +40,7 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "ds_email", nullable = false)
 	public String getEmail() {
 		return email;
 	}
@@ -47,7 +50,7 @@ public class Usuario implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "perfil", nullable = false)
+	@Column(name = "ds_perfil", nullable = false)
 	public PerfilEnum getPerfil() {
 		return perfil;
 	}
@@ -56,7 +59,7 @@ public class Usuario implements Serializable {
 		this.perfil = perfil;
 	}
 
-	@Column(name = "senha", nullable = false)
+	@Column(name = "nm_senha", nullable = false)
 	public String getSenha() {
 		return senha;
 	}
@@ -65,4 +68,12 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
+	@Column(name = "nr_cpf", nullable = false)
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 }
