@@ -7,6 +7,7 @@ import br.com.modelo.pontointeligente.api.services.EmpresaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class EmpresaController {
      * */
     @GetMapping(value = "/cnpj/{cnpj}")
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @Cacheable("buscarPorCnpj")
     public ResponseEntity<Response<EmpresaDto>> buscarPorCnpj(@PathVariable("cnpj") String cnpj){
         log.info("Bucando empresa por CNPJ: {}", cnpj);
         Response<EmpresaDto> response = new Response<EmpresaDto>();
