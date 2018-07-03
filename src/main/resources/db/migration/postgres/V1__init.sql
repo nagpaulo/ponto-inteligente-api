@@ -2,15 +2,17 @@ CREATE SCHEMA util AUTHORIZATION postgres;
 CREATE SCHEMA ponto AUTHORIZATION postgres;
 
 CREATE TABLE util.tb_usuario (
-    ci_usuario serial NOT NULL,
+    ci_usuario bigserial NOT NULL,
     ds_email varchar(255) NOT NULL,
     nm_senha varchar(255) NOT NULL,
     ds_perfil varchar(180) NOT NULL,
-    nr_cpf varchar NULL
+    nr_cpf varchar NULL,
+    CONSTRAINT pk_usuario PRIMARY KEY (ci_usuario)
 )
 WITH (
 OIDS=FALSE
 ) ;
+
 
 CREATE TABLE ponto.tb_empresa
 (
@@ -71,6 +73,19 @@ WITH (
 OIDS = FALSE
 )
 TABLESPACE pg_default;
+
+CREATE TABLE public.tb_todo (
+    ci_todo serial NOT NULL,
+    ds_todo varchar(300) NOT NULL,
+    fl_done bool NOT NULL,
+    dt_criacao timestamptz NOT NULL,
+    dt_atualizacao timestamptz NULL,
+    cd_usuario int8 NOT NULL,
+    CONSTRAINT fk_usuario FOREIGN KEY (cd_usuario) REFERENCES util.tb_usuario(ci_usuario)
+)
+WITH (
+OIDS=FALSE
+) ;
 
 ALTER TABLE ponto.tb_empresa OWNER to postgres;
 ALTER TABLE ponto.tb_funcionario OWNER to postgres;

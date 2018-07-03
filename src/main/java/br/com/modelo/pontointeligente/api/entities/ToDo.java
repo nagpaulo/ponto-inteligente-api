@@ -2,13 +2,12 @@ package br.com.modelo.pontointeligente.api.entities;
 
 import br.com.modelo.pontointeligente.api.security.entities.Usuario;
 
-import javax.persistence.Entity;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@Table(name = "tb_todo", schema = "public")
 public class ToDo implements Serializable{
 
 
@@ -21,7 +20,9 @@ public class ToDo implements Serializable{
     private Date dataAtualizacao;
     private Usuario usuario;
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ci_todo", nullable = false)
     public Long getId() {
         return id;
     }
@@ -30,6 +31,7 @@ public class ToDo implements Serializable{
         this.id = id;
     }
 
+    @Column(name = "ds_todo", nullable = false)
     public String getToDo() {
         return toDo;
     }
@@ -37,7 +39,7 @@ public class ToDo implements Serializable{
     public void setToDo(String toDo) {
         this.toDo = toDo;
     }
-
+    @Column(name = "fl_done", nullable = false)
     public Boolean getDone() {
         return done;
     }
@@ -46,6 +48,8 @@ public class ToDo implements Serializable{
         this.done = done;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dt_criacao", nullable = false)
     public Date getDataCriacao() {
         return dataCriacao;
     }
@@ -54,6 +58,8 @@ public class ToDo implements Serializable{
         this.dataCriacao = dataCriacao;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dt_atualizacao", nullable = false)
     public Date getDataAtualizacao() {
         return dataAtualizacao;
     }
@@ -62,6 +68,7 @@ public class ToDo implements Serializable{
         this.dataAtualizacao = dataAtualizacao;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
     public Usuario getUsuario() {
         return usuario;
     }
