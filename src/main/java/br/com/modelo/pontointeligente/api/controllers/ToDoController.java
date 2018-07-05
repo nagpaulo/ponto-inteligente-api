@@ -50,12 +50,40 @@ public class ToDoController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "{id}")
+    public ResponseEntity<Response<ToDoDto>> getToDoById(
+            @PathVariable("id") Long id
+    ){
+        log.info("Pesquisando por id");
+
+        Response<ToDoDto> response = new Response<ToDoDto>();
+        Optional<ToDo> toDo = this.toDoServices.buscarPorId(id);
+
+        if(!toDo.isPresent()){
+            log.info("ToDo não encontrado para o id {}", id);
+            response.getErrors().add("ToDo não encontrado para o id  " + id);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        response.setData(this.converteToDoDto(toDo.get()));
+        return ResponseEntity.ok(response);
+    }
+
     private ToDoDto converteToDoDto(ToDo toDo){
         ToDoDto toDoDto = new ToDoDto();
         toDoDto.setId(Optional.of(toDo.getId()));
         toDoDto.setToDo(toDo.getToDo());
         toDoDto.setDone(toDo.getDone());
         toDoDto.setUsuarioId(toDo.getUsuario().getId());
+        toDoDto.setDataCriacao(toDo.getDataCriacao().toString());
+
+        String dtAtualizacao = null;
+        try {
+            dtAtualizacao = toDo.getDataAtualizacao().toString();
+        }catch (Exception e){
+            log.warn("Data de Atualizacao vazia. {}", e.getMessage());
+        }
+        toDoDto.setDataAtualizacao(dtAtualizacao);
 
         return toDoDto;
     }

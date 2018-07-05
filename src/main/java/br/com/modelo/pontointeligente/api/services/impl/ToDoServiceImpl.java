@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ToDoServiceImpl implements ToDoServices{
     private static final Logger log = LoggerFactory.getLogger(ToDoServiceImpl.class);
@@ -19,7 +21,15 @@ public class ToDoServiceImpl implements ToDoServices{
 
     @Override
     public Page<ToDo> buscarPorToDo(String buscar, PageRequest pageRequest) {
-        log.info("Bucando ToDo por palavra", buscar);
-        return this.toDoRepository.findToDoLike(buscar,pageRequest);
+        log.info("Bucando ToDo por palavra ilike", buscar);
+        return this.toDoRepository.findByToDoContainingIgnoreCase(buscar,pageRequest);
     }
+
+    @Override
+    public Optional<ToDo> buscarPorId(Long id) {
+        log.info("Buscando ToDo por ID: {}", id);
+        return this.toDoRepository.findById(id);
+    }
+
+
 }

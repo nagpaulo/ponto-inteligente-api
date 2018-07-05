@@ -80,8 +80,8 @@ CREATE TABLE public.tb_todo (
     fl_done bool NOT NULL,
     dt_criacao timestamptz NOT NULL,
     dt_atualizacao timestamptz NULL,
-    cd_usuario int8 NOT NULL,
-    CONSTRAINT fk_usuario FOREIGN KEY (cd_usuario) REFERENCES util.tb_usuario(ci_usuario)
+    usuario_ci_usuario int8 NOT NULL,
+    CONSTRAINT fk_usuario FOREIGN KEY (cd_usuario) REFERENCES util.tb_usuario(usuario_ci_usuario)
 )
 WITH (
 OIDS=FALSE
