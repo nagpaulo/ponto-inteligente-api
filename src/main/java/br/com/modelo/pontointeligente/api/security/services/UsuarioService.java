@@ -14,4 +14,5 @@ public interface UsuarioService {
 	 */
 	Optional<Usuario> buscarPorEmail(String email);
 
+    Optional<Usuario> buscarPorId(Long usuarioId);
 }

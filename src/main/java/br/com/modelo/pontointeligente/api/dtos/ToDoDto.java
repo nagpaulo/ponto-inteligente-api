@@ -23,7 +23,6 @@ public class ToDoDto {
         this.id = id;
     }
 
-    @NotEmpty(message = "Data não pode ser vazia.")
     public String getData() {
         return data;
     }
@@ -33,7 +32,7 @@ public class ToDoDto {
     }
 
     @NotEmpty(message = "Nome não pode ser vazio.")
-    @Length(min = 3, max = 200, message = "Nome deve conter entre 3 e 200 caracteres.")
+    @Length(min = 3, max = 300, message = "Nome deve conter entre 3 e 200 caracteres.")
     public String getToDo() {
         return toDo;
     }

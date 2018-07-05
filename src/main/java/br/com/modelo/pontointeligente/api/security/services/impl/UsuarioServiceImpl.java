@@ -1,6 +1,5 @@
 package br.com.modelo.pontointeligente.api.security.services.impl;
 
-
 import br.com.modelo.pontointeligente.api.security.entities.Usuario;
 import br.com.modelo.pontointeligente.api.security.repositories.UsuarioRepository;
 import br.com.modelo.pontointeligente.api.security.services.UsuarioService;
@@ -17,5 +16,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	public Optional<Usuario> buscarPorEmail(String email) {
 		return Optional.ofNullable(this.usuarioRepository.findByEmail(email));
+	}
+
+	@Override
+	public Optional<Usuario> buscarPorId(Long usuarioId) {
+		return Optional.ofNullable(this.usuarioRepository.findUsuarioById(usuarioId));
 	}
 }

@@ -31,5 +31,11 @@ public class ToDoServiceImpl implements ToDoServices{
         return this.toDoRepository.findById(id);
     }
 
+    @Override
+    public ToDo persistir(ToDo toDo) {
+        log.info("Persistindo ToDo: {}", toDo);
+        return this.toDoRepository.save(toDo);
+    }
+
 
 }
