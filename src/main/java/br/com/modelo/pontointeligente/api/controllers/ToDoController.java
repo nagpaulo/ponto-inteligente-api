@@ -123,7 +123,7 @@ public class ToDoController {
         }
 
         log.info("Validando usuario id {}", toDoDto.getUsuarioId());
-        Optional<Usuario> usuario = this.usuarioService.buscarPorId(toDoDto.getUsuarioId());
+        Optional<Usuario> usuario = this.usuarioService.buscarPorEmail("nagpaulo@gmail.com");
         if(!usuario.isPresent()){
             result.addError(new ObjectError("Usuário", "Usuário não encontrado. ID inexistente."));
         }
