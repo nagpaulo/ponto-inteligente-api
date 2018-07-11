@@ -10,4 +10,11 @@ public interface ToDoServices {
     Page<ToDo> buscarPorToDo(String buscar, PageRequest pageRequest);
     Optional<ToDo> buscarPorId(Long id);
     ToDo persistir(ToDo toDo);
+
+    /**
+     * Remove um ToDo da base de dados.
+     *
+     * @param id
+     */
+    void remover(Long id);
 }

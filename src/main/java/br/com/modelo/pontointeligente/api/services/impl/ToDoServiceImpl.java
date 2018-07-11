@@ -37,5 +37,11 @@ public class ToDoServiceImpl implements ToDoServices{
         return this.toDoRepository.save(toDo);
     }
 
+    @Override
+    public void remover(Long id) {
+        log.info("Removendo ToDo id: {}", id);
+        this.toDoRepository.deleteById(id);
+    }
+
 
 }

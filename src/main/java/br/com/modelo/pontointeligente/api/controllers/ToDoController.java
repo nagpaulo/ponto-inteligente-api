@@ -97,6 +97,43 @@ public class ToDoController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping
+    public ResponseEntity<Response<ToDoDto>> adicionar(@Valid @RequestBody ToDoDto toDoDto, BindingResult result) throws ParseException{
+
+        log.info("Adcionando lançamento: {}", toDoDto.toString());
+        Response<ToDoDto> response = new Response<ToDoDto>();
+        validarUsuario(toDoDto, result);
+        ToDo toDo = this.converteToDoDtoParaToDo(toDoDto, result);
+
+        if(result.hasErrors()){
+            log.error("Erro validando ToDo: {}", result.getAllErrors());
+            result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        toDo = this.toDoServices.persistir(toDo);
+        response.setData(this.converteToDoDto(toDo));
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<Response<String>> remover(@PathVariable("id") Long id){
+        log.info("Removendo toDo: {}", id);
+        Response<String> response = new Response<String>();
+        Optional<ToDo> toDo = this.toDoServices.buscarPorId(id);
+
+        if(!toDo.isPresent()){
+            log.info("Erro ao remover devido ao toDo ID: {} ser inválido.", id);
+            response.getErrors().add("Erro ao remover toDo. Registro não encontrado para o id "+id);
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        this.toDoServices.remover(id);
+        Response<String> message = new Response<String>();
+        message.setData("Removido todo ID: "+id);
+        return ResponseEntity.ok(message);
+    }
+
     private ToDo converteToDoDtoParaToDo(ToDoDto toDoDto, BindingResult result) throws ParseException{
         ToDo toDo = new ToDo();
         if(toDoDto.getId().isPresent()){
