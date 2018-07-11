@@ -35,6 +35,7 @@ public class ToDoController {
     @Autowired
     private ToDoServices toDoServices;
 
+    @Autowired
     private UsuarioService usuarioService;
 
     @Value("${paginacao.qtd_por_pagina}")
@@ -82,7 +83,7 @@ public class ToDoController {
         log.info("Atualizando toDo: {}", toDoDto.toString());
         Response<ToDoDto> response = new Response<ToDoDto>();
         toDoDto.setId(Optional.of(id));
-        //validarUsuario(toDoDto, result);
+        validarUsuario(toDoDto, result);
         ToDo toDo = this.converteToDoDtoParaToDo(toDoDto, result);
 
         if(result.hasErrors()){
@@ -123,7 +124,7 @@ public class ToDoController {
         }
 
         log.info("Validando usuario id {}", toDoDto.getUsuarioId());
-        Optional<Usuario> usuario = this.usuarioService.buscarPorEmail("nagpaulo@gmail.com");
+        Optional<Usuario> usuario = this.usuarioService.buscarPorId(toDoDto.getUsuarioId());
         if(!usuario.isPresent()){
             result.addError(new ObjectError("Usuário", "Usuário não encontrado. ID inexistente."));
         }
