@@ -13,4 +13,8 @@ public interface ToDoRepository extends CrudRepository<ToDo, Long>{
     Page<ToDo> findByToDoContainingIgnoreCase(@Param("toDo") String toDo, Pageable pageable);
     Optional<ToDo> findById(@Param("id") Long id);
 
+    Page<ToDo> findByToDo(Pageable pageable);
+
+    Page<ToDo> findAll(Pageable pageable);
+
 }

@@ -26,6 +26,11 @@ public class ToDoServiceImpl implements ToDoServices{
     }
 
     @Override
+    public Page<ToDo> listarPorToDo(PageRequest pageRequest) {
+        return this.toDoRepository.findAll(pageRequest);
+    }
+
+    @Override
     public Optional<ToDo> buscarPorId(Long id) {
         log.info("Buscando ToDo por ID: {}", id);
         return this.toDoRepository.findById(id);

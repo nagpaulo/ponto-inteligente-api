@@ -41,8 +41,26 @@ public class ToDoController {
     @Value("${paginacao.qtd_por_pagina}")
     private int qtdPorPagina;
 
-    @GetMapping(value = "search/{buscar}")
+   @GetMapping(value = "listar")
     public ResponseEntity<Response<Page<ToDoDto>>> listarToDo(
+            @RequestParam(value = "pag", defaultValue = "0") int pag,
+            @RequestParam(value = "ord", defaultValue = "id") String ord,
+            @RequestParam(value = "dir", defaultValue = "DESC") String dir
+    ){
+        log.info("Listando tarefas");
+        Response<Page<ToDoDto>> response = new Response<Page<ToDoDto>>();
+
+        PageRequest pageRequest = PageRequest.of(pag, this.qtdPorPagina, Sort.Direction.valueOf(dir), ord);
+        Page<ToDo> todos = this.toDoServices.listarPorToDo(pageRequest);
+        Page<ToDoDto> toDoDtos = todos.map(toDo -> this.converteToDoDto(toDo));
+
+        response.setData(toDoDtos);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping(value = "listar/{buscar}")
+    public ResponseEntity<Response<Page<ToDoDto>>> listarToDoSearch(
             @PathVariable("buscar") String buscar,
             @RequestParam(value = "pag", defaultValue = "0") int pag,
             @RequestParam(value = "ord", defaultValue = "id") String ord,

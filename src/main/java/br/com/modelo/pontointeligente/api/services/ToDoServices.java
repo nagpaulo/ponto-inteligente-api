@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ToDoServices {
     Page<ToDo> buscarPorToDo(String buscar, PageRequest pageRequest);
+    Page<ToDo> listarPorToDo(PageRequest pageRequest);
     Optional<ToDo> buscarPorId(Long id);
     ToDo persistir(ToDo toDo);
 
