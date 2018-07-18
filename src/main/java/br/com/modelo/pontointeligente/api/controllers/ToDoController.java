@@ -5,6 +5,7 @@ import br.com.modelo.pontointeligente.api.entities.ToDo;
 import br.com.modelo.pontointeligente.api.response.Response;
 import br.com.modelo.pontointeligente.api.security.entities.Usuario;
 import br.com.modelo.pontointeligente.api.security.services.UsuarioService;
+import br.com.modelo.pontointeligente.api.security.utils.JwtTokenUtil;
 import br.com.modelo.pontointeligente.api.services.ToDoServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class ToDoController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @Value("${paginacao.qtd_por_pagina}")
     private int qtdPorPagina;
 
@@ -59,9 +63,9 @@ public class ToDoController {
     }
 
 
-    @GetMapping(value = "listar/{buscar}")
+    @PostMapping(value = "listar")
     public ResponseEntity<Response<Page<ToDoDto>>> listarToDoSearch(
-            @PathVariable("buscar") String buscar,
+            @RequestBody ToDoDto toDoDto,
             @RequestParam(value = "pag", defaultValue = "0") int pag,
             @RequestParam(value = "ord", defaultValue = "id") String ord,
             @RequestParam(value = "dir", defaultValue = "DESC") String dir
@@ -70,7 +74,7 @@ public class ToDoController {
         Response<Page<ToDoDto>> response = new Response<Page<ToDoDto>>();
 
         PageRequest pageRequest = PageRequest.of(pag, this.qtdPorPagina, Sort.Direction.valueOf(dir), ord);
-        Page<ToDo> todos = this.toDoServices.buscarPorToDo(buscar,pageRequest);
+        Page<ToDo> todos = this.toDoServices.buscarPorToDo(toDoDto.getToDo(),pageRequest);
         Page<ToDoDto> toDoDtos = todos.map(toDo -> this.converteToDoDto(toDo));
 
         response.setData(toDoDtos);
@@ -173,14 +177,18 @@ public class ToDoController {
     }
 
     private void validarUsuario(ToDoDto toDoDto, BindingResult result) {
+        String usernameFromToken = jwtTokenUtil.getUsernameFromToken(toDoDto.getAccess());
+        Optional<Usuario> user = this.usuarioService.buscarPorEmail(usernameFromToken);
+        toDoDto.setUsuarioId(user.get().getId());
+
+
         if (toDoDto.getUsuarioId() == null){
             result.addError(new ObjectError("Usuário", "Usuário não informado."));
             return;
         }
 
         log.info("Validando usuario id {}", toDoDto.getUsuarioId());
-        Optional<Usuario> usuario = this.usuarioService.buscarPorId(toDoDto.getUsuarioId());
-        if(!usuario.isPresent()){
+        if(!user.isPresent()){
             result.addError(new ObjectError("Usuário", "Usuário não encontrado. ID inexistente."));
         }
     }

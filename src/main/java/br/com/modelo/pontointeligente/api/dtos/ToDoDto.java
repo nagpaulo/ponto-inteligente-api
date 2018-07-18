@@ -14,6 +14,7 @@ public class ToDoDto {
     private String dataCriacao;
     private String dataAtualizacao;
     private Long usuarioId;
+    private String access;
 
     public Optional<Long> getId() {
         return id;
@@ -71,5 +72,13 @@ public class ToDoDto {
 
     public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public String getAccess() {
+        return access;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
     }
 }
