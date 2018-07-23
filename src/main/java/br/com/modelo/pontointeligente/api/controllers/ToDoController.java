@@ -51,7 +51,7 @@ public class ToDoController {
             @RequestParam(value = "ord", defaultValue = "id") String ord,
             @RequestParam(value = "dir", defaultValue = "DESC") String dir
     ){
-        log.info("Listando tarefas");
+        log.info("Listando tarefas all");
         Response<Page<ToDoDto>> response = new Response<Page<ToDoDto>>();
 
         PageRequest pageRequest = PageRequest.of(pag, this.qtdPorPagina, Sort.Direction.valueOf(dir), ord);
@@ -70,7 +70,7 @@ public class ToDoController {
             @RequestParam(value = "ord", defaultValue = "id") String ord,
             @RequestParam(value = "dir", defaultValue = "DESC") String dir
     ){
-        log.info("Listando tarefas");
+        log.info("Listando tarefas (List)");
         Response<Page<ToDoDto>> response = new Response<Page<ToDoDto>>();
 
         PageRequest pageRequest = PageRequest.of(pag, this.qtdPorPagina, Sort.Direction.valueOf(dir), ord);
@@ -105,7 +105,7 @@ public class ToDoController {
         log.info("Atualizando toDo: {}", toDoDto.toString());
         Response<ToDoDto> response = new Response<ToDoDto>();
         toDoDto.setId(Optional.of(id));
-        validarUsuario(toDoDto, result);
+        //validarUsuario(toDoDto, result);
         ToDo toDo = this.converteToDoDtoParaToDo(toDoDto, result);
 
         if(result.hasErrors()){
